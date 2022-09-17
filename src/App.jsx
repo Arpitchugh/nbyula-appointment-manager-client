@@ -1,11 +1,11 @@
 import { Button } from 'antd';
+import Signup from './Signup';
 import './app.less';
 
 function App() {
 	return (
 		<div>
-			<Button type='primary'>App</Button>
-			<h1 className='text-red-900'>Primary</h1>
+			<Signup />
 		</div>
 	);
 }

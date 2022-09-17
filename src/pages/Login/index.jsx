@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
 // import { useNavigate } from 'react-router-dom';
-import api from '../util/api.util';
+import api from '../../util/api.util';
 
 function Login() {
 	// const navigate = useNavigate();

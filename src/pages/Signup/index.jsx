@@ -1,15 +1,17 @@
 import { React, useState } from 'react';
 import { Button, Form, Input, message } from 'antd';
-import api from '../util/api.util';
+import { useDispatch } from 'react-redux';
+import { postSignup } from '../../action/auth.action';
 
 const Signup = () => {
+	const dispatch = useDispatch();
+
 	const [loading, setLoading] = useState(false);
 	const [form] = Form.useForm();
 
 	const submitHandler = values => {
 		setLoading(true);
-		api
-			.post('/auth/signup', values)
+		dispatch(postSignup(values))
 			.then(function (response) {
 				message.success('Signup successful');
 				console.log(response);

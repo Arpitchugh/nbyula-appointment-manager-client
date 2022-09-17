@@ -1,14 +1,15 @@
-import { Button } from 'antd';
-import Signup from './Signup';
+import { Provider } from 'react-redux';
+import Signup from './pages/Signup';
 import './app.less';
-import Login from './Login';
+import Login from './pages/Login';
+import store from './store';
 
 function App() {
 	return (
-		<div>
-			{/* <Signup /> */}
-			<Login />
-		</div>
+		<Provider store={store}>
+			<Signup />
+			{/* <Login /> */}
+		</Provider>
 	);
 }
 

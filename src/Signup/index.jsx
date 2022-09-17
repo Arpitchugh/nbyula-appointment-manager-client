@@ -1,18 +1,21 @@
 import { React, useState } from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import api from '../util/api.util';
 
 const Signup = () => {
+	const [loading, setLoading] = useState(false);
 	const [form] = Form.useForm();
 
 	const submitHandler = values => {
+		setLoading(true);
 		api
 			.post('/auth/signup', values)
 			.then(function (response) {
+				message.success('Signup successful');
 				console.log(response);
 			})
-			.catch(function (error) {
-				console.log(error);
+			.finally(() => {
+				setLoading(false);
 			});
 	};
 
@@ -97,9 +100,9 @@ const Signup = () => {
 							size='large'
 							htmlType='submit'
 							// disabled={isRequiredFieldMissing}
-							// loading={signupLoading}
+							loading={loading}
 						>
-							Signup
+							{loading ? 'terraformers ready to assemble...' : 'Signup'}
 						</Button>
 					</Form>
 				</div>

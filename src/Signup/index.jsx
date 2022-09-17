@@ -25,9 +25,6 @@ const Signup = () => {
 			email: '${label} is not a valid email!',
 			number: '${label} is not a valid number!',
 		},
-		number: {
-			range: '${label} must 10 digits',
-		},
 	};
 	return (
 		<main className='p-10 flex items-center justify-center'>

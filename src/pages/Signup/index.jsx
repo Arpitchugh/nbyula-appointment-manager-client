@@ -2,19 +2,24 @@ import { React, useState } from 'react';
 import { Button, Form, Input, message } from 'antd';
 import { useDispatch } from 'react-redux';
 import { postSignup } from '../../action/auth.action';
+import VerifyAccountModal from './components/verifyAccountModal';
 
 const Signup = () => {
 	const dispatch = useDispatch();
-
+	const [isRequiredFieldMissing, setIsRequiredFieldMissing] = useState(true);
+	const [isVerificationModalVisible, setIsVerificationModalVisible] =
+		useState(false);
+	const [userEmail, setUserEmail] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [form] = Form.useForm();
 
 	const submitHandler = values => {
 		setLoading(true);
 		dispatch(postSignup(values))
-			.then(function (response) {
+			.then(() => {
+				setUserEmail(values.email);
+				setIsVerificationModalVisible(true);
 				message.success('Signup successful');
-				console.log(response);
 			})
 			.finally(() => {
 				setLoading(false);
@@ -30,11 +35,11 @@ const Signup = () => {
 	};
 	return (
 		<main className='p-10 flex items-center justify-center'>
-			{/* <VerifyAccountModal
+			<VerifyAccountModal
 				isVisible={isVerificationModalVisible}
 				setIsVisible={setIsVerificationModalVisible}
 				email={userEmail}
-			/> */}
+			/>
 
 			<section className='flex w-full justify-around items-center shadow-2xl p-10 rounded-lg max-w-screen-2xl min-h-[80vh]'>
 				<div className='w-1/3 h-auto hidden md:block'>

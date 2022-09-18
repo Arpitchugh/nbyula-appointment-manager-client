@@ -1,9 +1,9 @@
 import api from '../util/api.util';
 import { userActions } from '../slices/user.slice';
 
-export function postSignup(values) {
+export function postSignup(body) {
 	return async () => {
-		return await api.post('/auth/signup', values);
+		return await api.post('/auth/signup', body);
 	};
 }
 
@@ -11,6 +11,21 @@ export function getVerifyAccount(pathParams) {
 	return async () => {
 		return await api.get(
 			`/auth/verify/${pathParams.email}/${pathParams.verificationCode}`
+		);
+	};
+}
+
+export function postForgotPassword(body) {
+	return async () => {
+		return await api.post('/auth/forgotpassword', body);
+	};
+}
+
+export function patchResetPassword(pathParams, body) {
+	return async () => {
+		return await api.patch(
+			`/auth/resetpassword/${pathParams.email}/${pathParams.passwordResetCode}`,
+			body
 		);
 	};
 }
@@ -39,7 +54,7 @@ export function getCurrentUser() {
 	};
 }
 
-export function logoutUser() {
+export function getLogoutUser() {
 	return async () => {
 		try {
 			const res = await api.get('/auth/logout');

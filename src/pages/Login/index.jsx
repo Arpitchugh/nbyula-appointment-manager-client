@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react';
 import { Form, Input, Button, message, Typography } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../../util/api.util';
+import ForgetPasswordModal from './components/ForgetPasswordModal';
 
 function Login() {
 	const navigate = useNavigate();
 	const [loginLoading, setLoginLoading] = useState(false);
 	const [form] = Form.useForm();
 	const [isRequiredFieldMissing, setIsRequiredFieldMissing] = useState(true);
+	const [forgetPasswordModalVisible, setForgetPasswordModalVisible] =
+		useState(false);
 
 	const validateMessage = {
 		required: '${label} is required!',
@@ -43,6 +46,10 @@ function Login() {
 
 	return (
 		<main className='p-10 flex items-center justify-center'>
+			<ForgetPasswordModal
+				isVisible={forgetPasswordModalVisible}
+				setIsVisible={setForgetPasswordModalVisible}
+			/>
 			<section className='flex w-full justify-around items-center shadow-2xl p-10 rounded-lg max-w-screen-2xl min-h-[80vh]'>
 				<div className='w-1/3 h-auto hidden md:block'>
 					<img
@@ -82,7 +89,11 @@ function Login() {
 							</Link>
 						</Typography.Paragraph>
 						<Typography.Paragraph className='text-center'>
-							<Link to='/forgot-password' className='text-blue-500'>
+							<Link
+								to='#'
+								className='text-blue-500'
+								onClick={() => setForgetPasswordModalVisible(true)}
+							>
 								forgot password?
 							</Link>
 						</Typography.Paragraph>

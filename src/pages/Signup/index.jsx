@@ -26,12 +26,18 @@ const Signup = () => {
 				setLoading(false);
 			});
 	};
+	const checkFieldValidation = () => {
+		const missingRequiredField = Object.values(form.getFieldsValue()).some(
+			field => field === undefined || field === ''
+		);
 
+		if (!missingRequiredField) setIsRequiredFieldMissing(false);
+		else setIsRequiredFieldMissing(true);
+	};
 	const validateMessage = {
 		required: '${label} is required!',
 		types: {
 			email: '${label} is not a valid email!',
-			number: '${label} is not a valid number!',
 		},
 	};
 	return (
@@ -57,7 +63,7 @@ const Signup = () => {
 						layout='vertical'
 						form={form}
 						onFinish={submitHandler}
-						// onChange={() => validateFields(form, setIsRequiredFieldMissing)}
+						onChange={checkFieldValidation}
 					>
 						<Form.Item label='Name' name='name' rules={[{ required: true }]}>
 							<Input placeholder='select me' size='large' />
@@ -112,7 +118,7 @@ const Signup = () => {
 							type='primary'
 							size='large'
 							htmlType='submit'
-							// disabled={isRequiredFieldMissing}
+							disabled={isRequiredFieldMissing}
 							loading={loading}
 							className='w-full px-5'
 						>

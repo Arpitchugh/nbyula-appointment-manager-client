@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { logoutUser } from '../../action/auth.action';
+import { getLogoutUser } from '../../action/auth.action';
 import AwesomeCalendar from './components/calendar';
 
 const { Title } = Typography;
@@ -14,7 +14,7 @@ const Home = () => {
 	const logoutHandler = async () => {
 		try {
 			setLogoutLoading(true);
-			await dispatch(logoutUser()).then(() => {
+			await dispatch(getLogoutUser()).then(() => {
 				navigate('/login');
 			});
 		} finally {

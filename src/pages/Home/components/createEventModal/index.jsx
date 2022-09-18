@@ -17,7 +17,10 @@ function CreateEventModal({ visible, setVisible, event }) {
 			open={visible}
 			title='Enter Event Details'
 			closable
-			onCancel={() => setVisible(false)}
+			onCancel={() => {
+				setVisible(false);
+				
+			}}
 		>
 			<Form layout='vertical'>
 				<Form.Item label='Title' name='title'>

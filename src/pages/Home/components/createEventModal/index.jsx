@@ -29,6 +29,7 @@ function CreateEventModal({ visible, setVisible, event }) {
 				end: new Date(event.end).toString(),
 			})
 		);
+		setVisible(false);
 	};
 
 	const blockTimeHandler = () => {
@@ -48,6 +49,10 @@ function CreateEventModal({ visible, setVisible, event }) {
 			open={visible}
 			className='!pb-0'
 			title='Enter Event Details'
+			onCancel={() => {
+				form.resetFields();
+				setVisible(false);
+			}}
 			closable
 			footer={
 				<div className='flex justify-between'>
@@ -72,10 +77,10 @@ function CreateEventModal({ visible, setVisible, event }) {
 			}
 		>
 			<Form layout='vertical' form={form} onFinish={submitHandler}>
-				<Form.Item label='Title' name='title'>
+				<Form.Item label='Title' name='title' rules={[{ required: true }]}>
 					<Input placeholder='salary++' />
 				</Form.Item>
-				<Form.Item label='Agenda' name='agenda'>
+				<Form.Item label='Agenda' name='agenda' rules={[{ required: true }]}>
 					<Input.TextArea
 						placeholder='lets talk about increasing my salary'
 						rows={4}

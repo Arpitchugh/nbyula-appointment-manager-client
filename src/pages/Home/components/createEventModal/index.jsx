@@ -3,11 +3,11 @@ import { Button, Form, Input, Modal, Select } from 'antd';
 import propTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../../../../action/user.action';
-import { createEvent } from '../../../../action/event.action';
+import { createEvent, getUserEvents } from '../../../../action/event.action';
 
 function CreateEventModal({ visible, setVisible, event }) {
 	const dispatch = useDispatch();
-	const { allUsers } = useSelector(state => state.user);
+	const { allUsers, currentUser } = useSelector(state => state.user);
 	const [form] = Form.useForm();
 
 	const [selectedGuests, setSelectedGuests] = useState([]);
@@ -16,10 +16,10 @@ function CreateEventModal({ visible, setVisible, event }) {
 		dispatch(getAllUsers());
 	}, [dispatch]);
 
-	const submitHandler = () => {
+	const submitHandler = async () => {
 		const values = form.getFieldsValue();
 
-		dispatch(
+		await dispatch(
 			createEvent({
 				type: 'appointment',
 				title: values.title,
@@ -29,7 +29,10 @@ function CreateEventModal({ visible, setVisible, event }) {
 				end: new Date(event.end).toString(),
 			})
 		);
+		setSelectedGuests([]);
+		form.resetFields();
 		setVisible(false);
+		dispatch(getUserEvents());
 	};
 
 	const blockTimeHandler = () => {
@@ -103,11 +106,18 @@ function CreateEventModal({ visible, setVisible, event }) {
 						optionFilterProp='children'
 						onChange={value => setSelectedGuests(value)}
 					>
-						{allUsers?.map(user => (
-							<Select.Option key={user._id} value={user._id} label={user.name}>
-								{`${user.name} <${user.email}>`}
-							</Select.Option>
-						))}
+						{allUsers?.map(
+							user =>
+								user.email !== currentUser.email && (
+									<Select.Option
+										key={user._id}
+										value={user._id}
+										label={user.name}
+									>
+										{`${user.name} <${user.email}>`}
+									</Select.Option>
+								)
+						)}
 					</Select>
 				</Form.Item>
 			</Form>

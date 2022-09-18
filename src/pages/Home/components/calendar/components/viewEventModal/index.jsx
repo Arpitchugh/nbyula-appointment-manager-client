@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { Button, List, message, Modal, Typography } from 'antd';
 import { useDispatch } from 'react-redux';
-import { deleteEvent } from '../../../../../../action/event.action';
+import {
+	deleteEvent,
+	getUserEvents,
+} from '../../../../../../action/event.action';
 
 function ViewEvent({ visible, setVisible, event }) {
 	const dispatch = useDispatch();
@@ -9,11 +12,12 @@ function ViewEvent({ visible, setVisible, event }) {
 
 	const deleteEventHandler = async () => {
 		try {
-			setLoading(true);	
+			setLoading(true);
 			await dispatch(deleteEvent(event._id));
 			message.success('event deleted successfully');
 			setVisible(false);
 		} finally {
+			dispatch(getUserEvents());
 			setLoading(false);
 		}
 	};

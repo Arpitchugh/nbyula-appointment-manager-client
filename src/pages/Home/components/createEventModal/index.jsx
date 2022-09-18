@@ -11,12 +11,14 @@ function CreateEventModal({ visible, setVisible, event }) {
 	const [form] = Form.useForm();
 
 	const [selectedGuests, setSelectedGuests] = useState([]);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		dispatch(getAllUsers());
 	}, [dispatch]);
 
 	const submitHandler = async () => {
+		setLoading(true);
 		const values = form.getFieldsValue();
 
 		await dispatch(
@@ -32,11 +34,13 @@ function CreateEventModal({ visible, setVisible, event }) {
 		setSelectedGuests([]);
 		form.resetFields();
 		setVisible(false);
+		setLoading(false);
 		dispatch(getUserEvents());
 	};
 
-	const blockTimeHandler = () => {
-		dispatch(
+	const blockTimeHandler = async () => {
+		setLoading(true);
+		await dispatch(
 			createEvent({
 				type: 'block',
 				title: 'Block Time',
@@ -44,9 +48,10 @@ function CreateEventModal({ visible, setVisible, event }) {
 				start: new Date(event.start).toString(),
 				end: new Date(event.end).toString(),
 			})
-		).then(() => {
-			dispatch(getAllUsers());
-		});
+		);
+		dispatch(getUserEvents());
+		setLoading(false);
+		setVisible(false);
 	};
 
 	return (
@@ -61,7 +66,12 @@ function CreateEventModal({ visible, setVisible, event }) {
 			closable
 			footer={
 				<div className='flex justify-between'>
-					<Button onClick={blockTimeHandler} type='ghost' danger>
+					<Button
+						onClick={blockTimeHandler}
+						type='ghost'
+						danger
+						loading={loading}
+					>
 						Block Time
 					</Button>
 					<div className='flex'>
@@ -74,13 +84,7 @@ function CreateEventModal({ visible, setVisible, event }) {
 						>
 							cancel
 						</Button>
-						<Button
-							onClick={() => {
-								submitHandler();
-								form.resetFields();
-							}}
-							type='primary'
-						>
+						<Button onClick={submitHandler} type='primary' loading={loading}>
 							ok
 						</Button>
 					</div>

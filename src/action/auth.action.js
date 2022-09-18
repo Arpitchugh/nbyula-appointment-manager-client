@@ -45,7 +45,6 @@ export function postForgotPassword(body) {
 			const res = await api.post('/auth/forgotpassword', body);
 			return Promise.resolve(res);
 		} catch (err) {
-			console.log('hi', err);
 			return Promise.reject(err);
 		}
 	};

@@ -12,13 +12,12 @@ const Home = () => {
 
 	const { currentUser, isLoggedIn } = useSelector(state => state.user);
 	const [logoutLoading, setLogoutLoading] = useState(false);
+	const accessToken = localStorage.getItem('access_token');
+	const refreshToken = localStorage.getItem('refresh_token');
 
 	useEffect(() => {
-		const accessToken = localStorage.getItem('access_token');
-		const refreshToken = localStorage.getItem('refresh_token');
-
 		if (!isLoggedIn && !accessToken && !refreshToken) navigate('/login');
-	}, [dispatch, isLoggedIn, navigate]);
+	}, [dispatch, isLoggedIn, navigate, accessToken, refreshToken]);
 
 	const logoutHandler = async () => {
 		try {

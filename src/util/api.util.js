@@ -38,7 +38,9 @@ api.interceptors.response.use(
 			if (res.access_token)
 				localStorage.setItem('access_token', res.access_token);
 
-			return Promise.reject(err.response.data);
+			const response = await api(err.config);
+
+			return Promise.resolve(response);
 		}
 
 		if (err.response.data) {

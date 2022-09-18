@@ -106,7 +106,7 @@ const Signup = () => {
 							// disabled={isRequiredFieldMissing}
 							loading={loading}
 						>
-							{loading ? 'terraformers ready to assemble...' : 'Signup'}
+							{loading ? 'terraformers ready to assemble... 🚀' : 'Signup 📝'}
 						</Button>
 					</Form>
 				</div>

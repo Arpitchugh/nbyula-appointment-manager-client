@@ -3,17 +3,13 @@ import { Form, Input, Button, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import api from '../../util/api.util';
 
-
-
-
 function Login() {
 	const navigate = useNavigate();
 	const [loginLoading, setLoginLoading] = useState(false);
 	const [form] = Form.useForm();
 	const [isRequiredFieldMissing, setIsRequiredFieldMissing] = useState(true);
 
-	
-	 const validateMessage = {
+	const validateMessage = {
 		required: '${label} is required!',
 		types: {
 			email: '${label} is not a valid email!',
@@ -87,7 +83,9 @@ function Login() {
 							disabled={isRequiredFieldMissing}
 							loading={loginLoading}
 						>
-							{loginLoading ? 'Terraformer Logging in...' : 'Login'}
+							{loginLoading
+								? 'Terraformer Logging in... 🚀'
+								: 'Terraformer Login 👩‍🚀'}
 						</Button>
 					</Form>
 				</div>

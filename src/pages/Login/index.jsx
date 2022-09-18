@@ -37,8 +37,6 @@ function Login() {
 			await dispatch(postLogin(values));
 			message.success('Login Successful');
 			navigate('/');
-		} catch (err) {
-			message.error(err);
 		} finally {
 			setLoginLoading(false);
 		}

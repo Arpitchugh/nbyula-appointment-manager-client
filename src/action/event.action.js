@@ -10,6 +10,7 @@ export function createEvent(body) {
 export function getUserEvents() {
 	return async dispatch => {
 		const res = await api.get('/events');
+
 		const formattedEvents = res.records.map(event => ({
 			...event,
 			start: new Date(event.start),

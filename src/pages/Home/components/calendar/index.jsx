@@ -6,6 +6,7 @@ import CreateEventModal from '../createEventModal';
 import './index.less';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserEvents } from '../../../../action/event.action';
+import ViewEvent from './components/viewEventModal';
 
 function AwesomeCalendar() {
 	const dispatch = useDispatch();
@@ -15,6 +16,8 @@ function AwesomeCalendar() {
 	const [isCreateEventModalVisible, setIsCreateEventModalVisible] =
 		useState(false);
 	const [createdCalendarEvent, setCreatedCalendarEvent] = useState({});
+	const [isViewEventModalVisible, setIsViewEventModalVisible] = useState(false);
+	const [selectedEvent, setSelectedEvent] = useState({});
 
 	useEffect(() => {
 		dispatch(getUserEvents());
@@ -25,9 +28,19 @@ function AwesomeCalendar() {
 		setIsCreateEventModalVisible(true);
 	};
 
+	const eventSelectHandler = event => {
+		setSelectedEvent(event);
+		setIsViewEventModalVisible(true);
+	};
+
 	return (
 		<>
 			<section className='h-screen'>
+				<ViewEvent
+					visible={isViewEventModalVisible}
+					setVisible={setIsViewEventModalVisible}
+					event={selectedEvent}
+				/>
 				<CreateEventModal
 					visible={isCreateEventModalVisible}
 					setVisible={setIsCreateEventModalVisible}
@@ -40,6 +53,7 @@ function AwesomeCalendar() {
 					events={userEvents}
 					defaultView={Views.WEEK}
 					onSelectSlot={selectSlotHandler}
+					onSelectEvent={eventSelectHandler}
 					selectable
 				/>
 			</section>

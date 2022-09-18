@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Form, Input, Button, message, Typography } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../../util/api.util';
 import ForgetPasswordModal from './components/ForgetPasswordModal';
+import { postLogin } from '../../action/auth.action';
+import { useDispatch } from 'react-redux';
 
 function Login() {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [loginLoading, setLoginLoading] = useState(false);
 	const [form] = Form.useForm();
@@ -29,19 +31,15 @@ function Login() {
 		else setIsRequiredFieldMissing(true);
 	};
 
-	const submitHandler = values => {
-		setLoginLoading(true);
-		api
-			.post('/auth/login', values)
-			.then(res => {
-				localStorage.setItem('access_token', res.access_token);
-				localStorage.setItem('refresh_token', res.refresh_token);
-				message.success('Login Successful');
-				navigate('/');
-			})
-			.finally(() => {
-				setLoginLoading(false);
-			});
+	const submitHandler = async values => {
+		try {
+			setLoginLoading(true);
+			await dispatch(postLogin(values));
+			message.success('Login Successful');
+			navigate('/');
+		} finally {
+			setLoginLoading(false);
+		}
 	};
 
 	return (

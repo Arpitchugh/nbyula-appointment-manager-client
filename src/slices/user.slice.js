@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { replaceAllUsers } from '../reducers/user.reducer';
+import { replaceAllUsers, replaceCurrentUser } from '../reducers/user.reducer';
 
 const initialState = {
 	currentUser: null,
@@ -12,6 +12,7 @@ const userSlice = createSlice({
 	initialState,
 	reducers: {
 		replaceAllUsers,
+		replaceUser: replaceCurrentUser,
 	},
 });
 

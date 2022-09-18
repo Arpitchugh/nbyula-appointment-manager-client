@@ -7,6 +7,16 @@ export function postSignup(body) {
 	};
 }
 
+export function postLogin(body) {
+	return async dispatch => {
+		const res = await api.post('/auth/login', body);
+		localStorage.setItem('access_token', res.access_token);
+		localStorage.setItem('refresh_token', res.refresh_token);
+		dispatch(getCurrentUser());
+		return res;
+	};
+}
+
 export function getVerifyAccount(pathParams) {
 	return async () => {
 		return await api.get(
@@ -41,11 +51,15 @@ export function getCurrentUser() {
 				},
 			});
 
-			// if (res.user) {
-			// 	dispatch(userActions.replaceUser({ user: res.user, isLoggedIn: true }));
-			// } else {
-			// 	dispatch(userActions.replaceUser({ user: null, isLoggedIn: false }));
-			// }
+			if (res.user) {
+				dispatch(
+					userActions.replaceUser({ currentUser: res.user, isLoggedIn: true })
+				);
+			} else {
+				dispatch(
+					userActions.replaceUser({ currentUser: null, isLoggedIn: false })
+				);
+			}
 
 			return Promise.resolve(res);
 		} catch (err) {

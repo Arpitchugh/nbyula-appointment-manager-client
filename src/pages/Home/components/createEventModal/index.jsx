@@ -56,6 +56,8 @@ function CreateEventModal({ visible, setVisible, event }) {
 						mode='multiple'
 						placeholder='Select guests'
 						optionLabelProp='label'
+						showSearch
+						optionFilterProp='children'
 						onChange={value => setSelectedGuests(value)}
 					>
 						{allUsers?.map(user => (

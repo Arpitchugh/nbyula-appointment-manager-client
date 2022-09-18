@@ -3,40 +3,65 @@ import { userActions } from '../slices/user.slice';
 
 export function postSignup(body) {
 	return async () => {
-		return await api.post('/auth/signup', body);
+		try {
+			const res = await api.post('/auth/signup', body);
+			Promise.resolve(res);
+		} catch (err) {
+			Promise.reject(err);
+		}
 	};
 }
 
 export function postLogin(body) {
 	return async dispatch => {
-		const res = await api.post('/auth/login', body);
-		localStorage.setItem('access_token', res.access_token);
-		localStorage.setItem('refresh_token', res.refresh_token);
-		dispatch(getCurrentUser());
-		return res;
+		try {
+			const res = await api.post('/auth/login', body);
+			localStorage.setItem('access_token', res.access_token);
+			localStorage.setItem('refresh_token', res.refresh_token);
+			dispatch(getCurrentUser());
+			return Promise.resolve(res);
+		} catch (err) {
+			return Promise.reject(err);
+		}
 	};
 }
 
 export function getVerifyAccount(pathParams) {
 	return async () => {
-		return await api.get(
-			`/auth/verify/${pathParams.email}/${pathParams.verificationCode}`
-		);
+		try {
+			const res = await api.get(
+				`/auth/verify/${pathParams.email}/${pathParams.verificationCode}`
+			);
+			Promise.resolve(res);
+		} catch (err) {
+			Promise.reject(err);
+		}
 	};
 }
 
 export function postForgotPassword(body) {
 	return async () => {
-		return await api.post('/auth/forgotpassword', body);
+		try {
+			const res = await api.post('/auth/forgotpassword', body);
+			return Promise.resolve(res);
+		} catch (err) {
+			console.log('hi', err);
+			return Promise.reject(err);
+		}
 	};
 }
 
 export function patchResetPassword(pathParams, body) {
 	return async () => {
-		return await api.patch(
-			`/auth/resetpassword/${pathParams.email}/${pathParams.passwordResetCode}`,
-			body
-		);
+		try {
+			const res = await api.patch(
+				`/auth/resetpassword/${pathParams.email}/${pathParams.passwordResetCode}`,
+				body
+			);
+			return Promise.resolve(res);
+		} catch (err) {
+			return Promise.reject(err);
+		}
 	};
 }
 

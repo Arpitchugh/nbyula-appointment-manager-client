@@ -18,6 +18,7 @@ function AwesomeCalendar() {
 	const [createdCalendarEvent, setCreatedCalendarEvent] = useState({});
 	const [isViewEventModalVisible, setIsViewEventModalVisible] = useState(false);
 	const [selectedEvent, setSelectedEvent] = useState({});
+	const [defaultView, setDefaultView] = useState(Views.WEEK);
 
 	useEffect(() => {
 		dispatch(getUserEvents());
@@ -50,7 +51,8 @@ function AwesomeCalendar() {
 					localizer={localizer}
 					defaultDate={new Date().toString()}
 					events={userEvents}
-					defaultView={Views.WEEK}
+					defaultView={defaultView}
+					onView={view => setDefaultView(view)}
 					onSelectSlot={selectSlotHandler}
 					onSelectEvent={eventSelectHandler}
 					eventPropGetter={(event, start, end, isSelected) => ({

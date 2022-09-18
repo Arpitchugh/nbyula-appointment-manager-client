@@ -23,9 +23,9 @@ const Home = () => {
 	const logoutHandler = async () => {
 		try {
 			setLogoutLoading(true);
-			await dispatch(getLogoutUser()).then(() => {
-				navigate('/login');
-			});
+			await dispatch(getLogoutUser());
+			localStorage.clear();
+			navigate('/login');
 		} finally {
 			setLogoutLoading(false);
 		}
@@ -49,18 +49,10 @@ const Home = () => {
 					) : (
 						<>
 							<Title level={2}>Terraformer 🌍</Title>
-							<Button
-								type='primary'
-								onClick={logoutHandler}
-								loading={logoutLoading}
-							>
+							<Button type='primary' loading={logoutLoading}>
 								<Link to='/login'>Login</Link>
 							</Button>
-							<Button
-								type='primary'
-								onClick={logoutHandler}
-								loading={logoutLoading}
-							>
+							<Button type='primary' loading={logoutLoading}>
 								<Link to='/signup'>Signup</Link>
 							</Button>
 						</>

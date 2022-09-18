@@ -1,15 +1,19 @@
 import { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import api from '../../util/api.util';
 
+
+
+
 function Login() {
-	// const navigate = useNavigate();
+	const navigate = useNavigate();
 	const [loginLoading, setLoginLoading] = useState(false);
 	const [form] = Form.useForm();
 	const [isRequiredFieldMissing, setIsRequiredFieldMissing] = useState(true);
 
-	const validateMessage = {
+	
+	 const validateMessage = {
 		required: '${label} is required!',
 		types: {
 			email: '${label} is not a valid email!',
@@ -34,7 +38,7 @@ function Login() {
 				localStorage.setItem('access_token', res.access_token);
 				localStorage.setItem('refresh_token', res.refresh_token);
 				message.success('Login Successful');
-				// navigate('/');
+				navigate('/');
 			})
 			.finally(() => {
 				setLoginLoading(false);

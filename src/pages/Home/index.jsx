@@ -1,23 +1,43 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { Button, Typography } from 'antd';
-const { Paragraph, Title } = Typography;
-const home = () => {
+import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
+import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
+import moment from 'moment';
+import './index.less';
+
+const { Title } = Typography;
+const Home = () => {
+	const localizer = momentLocalizer(moment);
+	const DnDCalendar = withDragAndDrop(Calendar);
+	const [events, setEvents] = useState([]);
+
+	console.log(events);
+
+	const selectSlotHandler = event => {
+		setEvents(prevState => [
+			...prevState,
+			{ start: event.start, end: event.end },
+		]);
+	};
+
 	return (
 		<>
-			<section className='w-full items-center shadow-2xl m-10 p-5 rounded-lg max-w-screen-2xl min-h-[80vh]'>
+			<section>
 				<Title level={2}>Hi terraformer!!!</Title>
-				<Title level={5}>Let's build today's schedule</Title>
-				<div className='flex'>
-					<Button type='primary' className='mr-4' size='large'>
-						Sign up
-					</Button>
-					<Button type='primary' size='large'>
-						Login
-					</Button>
+				<div className='h-screen'>
+					<DnDCalendar
+						min={new Date(1970, 1, 1, 0)}
+						scrollToTime={new Date(1970, 1, 1, 3)}
+						localizer={localizer}
+						events={events}
+						defaultView={Views.WEEK}
+						onSelectSlot={selectSlotHandler}
+						selectable
+					/>
 				</div>
 			</section>
 		</>
 	);
 };
 
-export default home;
+export default Home;

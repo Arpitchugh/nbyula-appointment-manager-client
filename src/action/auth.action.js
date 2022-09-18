@@ -38,3 +38,18 @@ export function getCurrentUser() {
 		}
 	};
 }
+
+export function logoutUser() {
+	return async () => {
+		try {
+			const res = await api.get('/auth/logout');
+
+			localStorage.removeItem('access_token');
+			localStorage.removeItem('refresh_token');
+
+			return Promise.resolve(res);
+		} catch (err) {
+			return Promise.reject(err);
+		}
+	};
+}

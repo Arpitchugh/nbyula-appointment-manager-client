@@ -1,15 +1,41 @@
-import React from 'react';
-import { Typography } from 'antd';
+import React, { useState } from 'react';
+import { Button, Typography } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../../action/auth.action';
 import AwesomeCalendar from './components/calendar';
 
 const { Title } = Typography;
 const Home = () => {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const [logoutLoading, setLogoutLoading] = useState(false);
+
+	const logoutHandler = async () => {
+		try {
+			setLogoutLoading(true);
+			await dispatch(logoutUser()).then(() => {
+				navigate('/login');
+			});
+		} finally {
+			setLogoutLoading(false);
+		}
+	};
 	return (
 		<>
-			<main>
-				<Title level={2}>Hi terraformer!!!</Title>
+			<section className='m-5'>
+				<div className='flex justify-between mt-5'>
+					<Title level={2}>Hi terraformer!!!</Title>
+					<Button
+						type='primary'
+						onClick={logoutHandler}
+						loading={logoutLoading}
+					>
+						Logout
+					</Button>
+				</div>
 				<AwesomeCalendar />
-			</main>
+			</section>
 		</>
 	);
 };

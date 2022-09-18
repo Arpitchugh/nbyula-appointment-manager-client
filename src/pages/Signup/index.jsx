@@ -1,8 +1,9 @@
 import { React, useState } from 'react';
-import { Button, Form, Input, message } from 'antd';
+import { Button, Form, Input, message, Typography } from 'antd';
 import { useDispatch } from 'react-redux';
 import { postSignup } from '../../action/auth.action';
 import VerifyAccountModal from './components/verifyAccountModal';
+import { Link } from 'react-router-dom';
 
 const Signup = () => {
 	const dispatch = useDispatch();
@@ -98,13 +99,22 @@ const Signup = () => {
 						>
 							<Input.Password placeholder='ab kr bhi lo !!' size='large' />
 						</Form.Item>
-
+						<Typography.Paragraph className='text-center'>
+							already have an account?{' '}
+							<Link
+								to='/login'
+								className='text-blue-500 !underline underline-offset-2'
+							>
+								login
+							</Link>
+						</Typography.Paragraph>
 						<Button
 							type='primary'
 							size='large'
 							htmlType='submit'
 							// disabled={isRequiredFieldMissing}
 							loading={loading}
+							className='w-full px-5'
 						>
 							{loading ? 'terraformers ready to assemble... 🚀' : 'Signup 📝'}
 						</Button>

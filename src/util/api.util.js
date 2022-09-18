@@ -6,6 +6,23 @@ const api = axios.create({
 	timeout: 4000,
 });
 
+api.interceptors.request.use(config => {
+	const accessToken = localStorage.getItem('access_token');
+	const refreshToken = localStorage.getItem('refresh_token');
+
+	console.log(refreshToken);
+
+	if (accessToken) {
+		config.headers['Authorization'] = `Bearer ${accessToken}`;
+	}
+
+	if (refreshToken) {
+		config.headers['x-refresh'] = refreshToken;
+	}
+
+	return config;
+});
+
 api.interceptors.response.use(
 	res => {
 		return Promise.resolve(res.data);

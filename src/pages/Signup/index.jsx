@@ -1,11 +1,13 @@
 import { React, useState } from 'react';
 import { Button, Form, Input, message, Typography } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { postSignup } from '../../action/auth.action';
 import VerifyAccountModal from './components/verifyAccountModal';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [isRequiredFieldMissing, setIsRequiredFieldMissing] = useState(true);
 	const [isVerificationModalVisible, setIsVerificationModalVisible] =
@@ -13,7 +15,8 @@ const Signup = () => {
 	const [userEmail, setUserEmail] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [form] = Form.useForm();
-
+	const { isLoggedIn } = useSelector(state => state.user);
+	if (isLoggedIn) navigate('/');
 	const submitHandler = values => {
 		setLoading(true);
 		dispatch(postSignup(values))

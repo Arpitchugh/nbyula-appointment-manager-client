@@ -3,7 +3,7 @@ import { Form, Input, Button, message, Typography } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import ForgetPasswordModal from './components/ForgetPasswordModal';
 import { postLogin } from '../../action/auth.action';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Login() {
 	const dispatch = useDispatch();
@@ -13,7 +13,8 @@ function Login() {
 	const [isRequiredFieldMissing, setIsRequiredFieldMissing] = useState(true);
 	const [forgetPasswordModalVisible, setForgetPasswordModalVisible] =
 		useState(false);
-
+	const { isLoggedIn } = useSelector(state => state.user);
+	if (isLoggedIn) navigate('/');
 	const validateMessage = {
 		required: '${label} is required!',
 		types: {

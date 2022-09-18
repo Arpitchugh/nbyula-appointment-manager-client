@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Form, Input, Modal, Select } from 'antd';
+import { Button, Form, Input, Modal, Select } from 'antd';
 import propTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../../../../action/user.action';
@@ -29,19 +29,40 @@ function CreateEventModal({ visible, setVisible, event }) {
 			})
 		);
 	};
-
+	function blockUserTime(){
+		console.log("blockUserTime");
+	}
 	return (
 		<Modal
 			open={visible}
+			className='!pb-0'
 			title='Enter Event Details'
 			closable
-			onCancel={() => {
-				form.resetFields();
-				setVisible(false);
-			}}
-			onOk={submitHandler}
+			footer={
+				<div className='flex justify-between'>
+					<Button onClick={() => blockUserTime()}>block time</Button>
+					<div className='flex'>
+						<Button
+							onClick={() => {
+								form.resetFields();
+								setVisible(false);
+							}}
+							type='default'
+						>
+							cancel
+						</Button>
+						<Button onClick={() => submitHandler()} type='primary'>
+							ok
+						</Button>
+					</div>
+				</div>
+			}
 		>
-			<Form layout='vertical' form={form} onFinish={submitHandler}>
+			<Form
+				layout='vertical'
+				form={form}
+				onFinish={submitHandler}
+			>
 				<Form.Item label='Title' name='title'>
 					<Input placeholder='salary++' />
 				</Form.Item>

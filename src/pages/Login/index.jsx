@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { Form, Input, Button, message } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Form, Input, Button, message, Typography } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
 import api from '../../util/api.util';
 
 function Login() {
@@ -75,13 +75,24 @@ function Login() {
 						>
 							<Input.Password placeholder='mypasssword' size='large' />
 						</Form.Item>
-
+						<Typography.Paragraph className='text-center'>
+							don't have an account?{' '}
+							<Link to='/signup' className='underline-offset-2 !underline'>
+								SignUp
+							</Link>
+						</Typography.Paragraph>
+						<Typography.Paragraph className='text-center'>
+							<Link to='/forgot-password' className='text-blue-500'>
+								forgot password?
+							</Link>
+						</Typography.Paragraph>
 						<Button
 							type='primary'
 							size='large'
 							htmlType='submit'
 							disabled={isRequiredFieldMissing}
 							loading={loginLoading}
+							className='w-full'
 						>
 							{loginLoading
 								? 'Terraformer Logging in... 🚀'

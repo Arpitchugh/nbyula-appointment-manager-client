@@ -6,6 +6,23 @@ const api = axios.create({
 	timeout: 4000,
 });
 
+api.interceptors.request.use(config => {
+	const accessToken = localStorage.getItem('access_token');
+	const refreshToken = localStorage.getItem('refresh_token');
+
+	console.log(refreshToken);
+
+	if (accessToken) {
+		config.headers['Authorization'] = `Bearer ${accessToken}`;
+	}
+
+	if (refreshToken) {
+		config.headers['x-refresh'] = refreshToken;
+	}
+
+	return config;
+});
+
 api.interceptors.response.use(
 	res => {
 		console.log(res);
@@ -14,7 +31,6 @@ api.interceptors.response.use(
 	async err => {
 		const accessToken = localStorage.getItem('access_token');
 		const refreshToken = localStorage.getItem('refresh_token');
-		console.log(err);
 		if (err.response.status === 403 && accessToken && refreshToken) {
 			const res = await api.get('/auth/refresh', {
 				headers: {

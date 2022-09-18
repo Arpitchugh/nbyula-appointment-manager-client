@@ -42,6 +42,7 @@ function VerifyAccountModal({ isVisible, setIsVisible, email }) {
 			open={isVisible}
 			closable={false}
 			destroyOnClose
+			centered
 			footer={
 				<Button
 					type='primary'

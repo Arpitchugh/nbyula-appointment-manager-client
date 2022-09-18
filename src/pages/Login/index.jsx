@@ -24,7 +24,7 @@ function Login() {
 
 	const checkFieldValidation = () => {
 		const missingRequiredField = Object.values(form.getFieldsValue()).some(
-			field => field === undefined || field === ''
+			field => field === undefined || field === '' || field === null
 		);
 
 		if (!missingRequiredField) setIsRequiredFieldMissing(false);
@@ -37,6 +37,8 @@ function Login() {
 			await dispatch(postLogin(values));
 			message.success('Login Successful');
 			navigate('/');
+		} catch (err) {
+			message.error(err);
 		} finally {
 			setLoginLoading(false);
 		}

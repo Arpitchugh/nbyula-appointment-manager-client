@@ -47,14 +47,23 @@ function AwesomeCalendar() {
 					event={createdCalendarEvent}
 				/>
 				<DnDCalendar
-					min={new Date(1970, 1, 1, 0)}
-					scrollToTime={new Date(1970, 1, 1, 3)}
 					localizer={localizer}
+					defaultDate={new Date().toString()}
 					events={userEvents}
 					defaultView={Views.WEEK}
 					onSelectSlot={selectSlotHandler}
 					onSelectEvent={eventSelectHandler}
+					eventPropGetter={(event, start, end, isSelected) => ({
+						event,
+						start,
+						end,
+						isSelected,
+						style: {
+							backgroundColor: event.type === 'block' ? '#002a4d' : '#40A9FF',
+						},
+					})}
 					selectable
+					popup
 				/>
 			</section>
 		</>

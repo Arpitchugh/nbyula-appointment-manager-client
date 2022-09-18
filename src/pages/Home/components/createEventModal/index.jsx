@@ -18,40 +18,45 @@ function CreateEventModal({ visible, setVisible, event }) {
 	}, [dispatch]);
 
 	const submitHandler = async () => {
-		setLoading(true);
-		const values = form.getFieldsValue();
-
-		await dispatch(
-			createEvent({
-				type: 'appointment',
-				title: values.title,
-				agenda: values.agenda,
-				guests: selectedGuests,
-				start: new Date(event.start).toString(),
-				end: new Date(event.end).toString(),
-			})
-		);
-		setSelectedGuests([]);
-		form.resetFields();
-		setVisible(false);
-		setLoading(false);
-		dispatch(getUserEvents());
+		try {
+			setLoading(true);
+			const values = form.getFieldsValue();
+			await dispatch(
+				createEvent({
+					type: 'appointment',
+					title: values.title,
+					agenda: values.agenda,
+					guests: selectedGuests,
+					start: new Date(event.start).toString(),
+					end: new Date(event.end).toString(),
+				})
+			);
+			form.resetFields();
+			setVisible(false);
+		} finally {
+			setSelectedGuests([]);
+			setLoading(false);
+			dispatch(getUserEvents());
+		}
 	};
 
 	const blockTimeHandler = async () => {
 		setLoading(true);
-		await dispatch(
-			createEvent({
-				type: 'block',
-				title: 'Block Time',
-				agenda: 'I am not available',
-				start: new Date(event.start).toString(),
-				end: new Date(event.end).toString(),
-			})
-		);
-		dispatch(getUserEvents());
-		setLoading(false);
-		setVisible(false);
+		try {
+			await dispatch(
+				createEvent({
+					type: 'block',
+					title: 'Blocked Time',
+					agenda: 'I am not available',
+					start: new Date(event.start).toString(),
+					end: new Date(event.end).toString(),
+				})
+			);
+			setVisible(false);
+		} finally {
+			setLoading(false);
+			dispatch(getUserEvents());
+		}
 	};
 
 	return (

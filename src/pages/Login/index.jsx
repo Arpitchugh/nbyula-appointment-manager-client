@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Form, Input, Button, message, Typography } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import ForgetPasswordModal from './components/ForgetPasswordModal';

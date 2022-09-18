@@ -7,6 +7,17 @@ export function createEvent(body) {
 	};
 }
 
+export function deleteEvent(id) {
+	return async () => {
+		try {
+			const res = await api.delete(`/events/${id}`);
+			return Promise.resolve(res);
+		} catch (err) {
+			return Promise.reject(err);
+		}
+	};
+}
+
 export function getUserEvents() {
 	return async dispatch => {
 		const res = await api.get('/events');

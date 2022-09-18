@@ -41,7 +41,9 @@ function CreateEventModal({ visible, setVisible, event }) {
 				start: new Date(event.start).toString(),
 				end: new Date(event.end).toString(),
 			})
-		);
+		).then(() => {
+			dispatch(getAllUsers());
+		});
 	};
 
 	return (
@@ -69,7 +71,13 @@ function CreateEventModal({ visible, setVisible, event }) {
 						>
 							cancel
 						</Button>
-						<Button onClick={() => submitHandler()} type='primary'>
+						<Button
+							onClick={() => {
+								submitHandler();
+								form.resetFields();
+							}}
+							type='primary'
+						>
 							ok
 						</Button>
 					</div>

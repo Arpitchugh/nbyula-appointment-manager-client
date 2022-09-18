@@ -1,6 +1,19 @@
-import { List, Modal, Typography } from 'antd';
+import { useState } from 'react';
+import { Button, List, message, Modal, Typography } from 'antd';
+import { useDispatch } from 'react-redux';
+import { deleteEvent } from '../../../../../../action/event.action';
 
 function ViewEvent({ visible, setVisible, event }) {
+	const dispatch = useDispatch();
+	const [loading, setLoading] = useState(false);
+	const deleteEventHandler = async () => {
+		await dispatch(deleteEvent(event._id))
+			.then(() => message.success('event deleted successfully'))
+			.finally(() => {
+				setLoading(false);
+				setVisible(false);
+			});
+	};
 	return (
 		<Modal
 			open={visible}
@@ -52,6 +65,17 @@ function ViewEvent({ visible, setVisible, event }) {
 					)}
 				/>
 			</div>
+			<Button
+				danger
+				loading={loading}
+				type='ghost'
+				onClick={() => {
+					setLoading(true);
+					deleteEventHandler();
+				}}
+			>
+				delete event
+			</Button>
 		</Modal>
 	);
 }

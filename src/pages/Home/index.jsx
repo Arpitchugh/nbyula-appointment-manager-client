@@ -35,32 +35,33 @@ const Home = () => {
 		<>
 			<section className='m-5'>
 				<div className='flex justify-between mt-5'>
-					<Title level={2}>Hi {currentUser?.name}!!!</Title>
-
 					{isLoggedIn ? (
-						<Button
-							type='primary'
-							onClick={logoutHandler}
-							loading={logoutLoading}
-						>
-							Logout
-						</Button>
-					) : (
 						<>
+							<Title level={2}>Hi {currentUser?.name}!!!</Title>
 							<Button
 								type='primary'
 								onClick={logoutHandler}
 								loading={logoutLoading}
 							>
-								<Link to='/signup'>Signup</Link>
+								Logout
 							</Button>
-
+						</>
+					) : (
+						<>
+							<Title level={2}>Terraformer 🌍</Title>
 							<Button
 								type='primary'
 								onClick={logoutHandler}
 								loading={logoutLoading}
 							>
 								<Link to='/login'>Login</Link>
+							</Button>
+							<Button
+								type='primary'
+								onClick={logoutHandler}
+								loading={logoutLoading}
+							>
+								<Link to='/signup'>Signup</Link>
 							</Button>
 						</>
 					)}

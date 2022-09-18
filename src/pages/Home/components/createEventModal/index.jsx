@@ -37,7 +37,7 @@ function CreateEventModal({ visible, setVisible, event }) {
 					>
 						{allUsers?.map(user => (
 							<Select.Option key={user._id} value={user._id} label={user.name}>
-								{user.name} {`<${user.email}>`}
+								{`${user.name} <${user.email}>`}
 							</Select.Option>
 						))}
 					</Select>

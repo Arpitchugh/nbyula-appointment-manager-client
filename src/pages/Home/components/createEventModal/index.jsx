@@ -21,6 +21,7 @@ function CreateEventModal({ visible, setVisible, event }) {
 
 		dispatch(
 			createEvent({
+				type: 'appointment',
 				title: values.title,
 				agenda: values.agenda,
 				guests: selectedGuests,
@@ -29,9 +30,19 @@ function CreateEventModal({ visible, setVisible, event }) {
 			})
 		);
 	};
-	function blockUserTime(){
-		console.log("blockUserTime");
-	}
+
+	const blockTimeHandler = () => {
+		dispatch(
+			createEvent({
+				type: 'block',
+				title: 'Block Time',
+				agenda: 'I am not available',
+				start: new Date(event.start).toString(),
+				end: new Date(event.end).toString(),
+			})
+		);
+	};
+
 	return (
 		<Modal
 			open={visible}
@@ -40,7 +51,9 @@ function CreateEventModal({ visible, setVisible, event }) {
 			closable
 			footer={
 				<div className='flex justify-between'>
-					<Button onClick={() => blockUserTime()}>block time</Button>
+					<Button onClick={blockTimeHandler} type='ghost' danger>
+						Block Time
+					</Button>
 					<div className='flex'>
 						<Button
 							onClick={() => {
@@ -58,11 +71,7 @@ function CreateEventModal({ visible, setVisible, event }) {
 				</div>
 			}
 		>
-			<Form
-				layout='vertical'
-				form={form}
-				onFinish={submitHandler}
-			>
+			<Form layout='vertical' form={form} onFinish={submitHandler}>
 				<Form.Item label='Title' name='title'>
 					<Input placeholder='salary++' />
 				</Form.Item>

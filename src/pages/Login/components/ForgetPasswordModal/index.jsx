@@ -10,36 +10,36 @@ const ForgetPasswordModal = ({ isVisible, setIsVisible }) => {
 	const dispatch = useDispatch();
 
 	const [passwordResetCodeSent, setPasswordResetCodeSent] = useState(false);
+	const [isRequiredFieldMissing, setIsRequiredFieldMissing] = useState(true);
 	const [verifyAccountLoading, setVerifyAccountLoading] = useState(false);
-	const [verifyCodeLoading, setVerifyCodeLoading] = useState(false);
 	const [form] = Form.useForm();
 
-	const validateMessage = {
-		required: '${label} is required!',
-		types: {
-			email: '${label} is not a valid email!',
-			number: '${label} is not a valid number!',
-		},
-	};
+	const validateFields = (form, setIsFieldsValidating) => {
+		const missingRequiredField = Object.values(form.getFieldsValue()).some(
+			value => value === '' || !value
+		);
 
+		setIsFieldsValidating(missingRequiredField);
+
+		return missingRequiredField;
+	};
 	const sendVerificationEmail = async () => {
-		setVerifyCodeLoading(true);
-
-		const values = form.getFieldsValue();
-		await dispatch(postForgotPassword({ email: values.email }))
-			.then(() => {
-				message.success('Password reset code sent to email');
-				setVerifyCodeLoading(false);
-				setPasswordResetCodeSent(true);
-			})
-			.finally(setVerifyCodeLoading(false));
-	};
-
-	const submitHandler = () => {
-		setVerifyAccountLoading(true);
 		try {
 			const values = form.getFieldsValue();
-			dispatch(
+			await dispatch(postForgotPassword({ email: values.email })).then(() => {
+				message.success('Password reset code sent to email');
+				setPasswordResetCodeSent(true);
+			});
+		} finally {
+			setVerifyAccountLoading(false);
+		}
+	};
+
+	const submitHandler = async () => {
+		try {
+			const values = form.getFieldsValue();
+
+			await dispatch(
 				patchResetPassword(
 					{
 						email: values.email,
@@ -48,11 +48,10 @@ const ForgetPasswordModal = ({ isVisible, setIsVisible }) => {
 					{ password: values.password, cpassword: values.cpassword }
 				)
 			).then(() => {
-				setVerifyAccountLoading(false);
 				message.success('Password reset successfully');
 			});
-		} catch (err) {
-			message.error(err);
+		} finally {
+			setVerifyAccountLoading(false);
 		}
 	};
 
@@ -63,11 +62,10 @@ const ForgetPasswordModal = ({ isVisible, setIsVisible }) => {
 
 	return (
 		<Modal
-			title='Create new Account!'
+			title='Verify Your Account!'
 			open={isVisible}
 			closable={false}
 			destroyOnClose
-			centered
 			okText='Change Password'
 			onCancel={cancelHandler}
 			footer={
@@ -79,14 +77,18 @@ const ForgetPasswordModal = ({ isVisible, setIsVisible }) => {
 						type='primary'
 						onClick={submitHandler}
 						disabled={!passwordResetCodeSent}
-						loading={verifyAccountLoading}
 					>
 						Change Password
 					</Button>
 				</>
 			}
 		>
-			<Form form={form} layout='vertical' onFinish={submitHandler}>
+			<Form
+				form={form}
+				layout='vertical'
+				onFinish={submitHandler}
+				onChange={() => validateFields(form, setIsRequiredFieldMissing)}
+			>
 				<Form.Item
 					label='Email'
 					name='email'
@@ -98,7 +100,6 @@ const ForgetPasswordModal = ({ isVisible, setIsVisible }) => {
 							type='primary'
 							className='ml-2'
 							onClick={sendVerificationEmail}
-							loading={verifyCodeLoading}
 						>
 							{passwordResetCodeSent ? 'Resend Code' : 'Send code'}
 						</Button>

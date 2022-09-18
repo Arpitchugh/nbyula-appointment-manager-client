@@ -24,8 +24,8 @@ function CreateEventModal({ visible, setVisible, event }) {
 				title: values.title,
 				agenda: values.agenda,
 				guests: selectedGuests,
-				startTime: new Date(event.start).toISOString(),
-				endTime: new Date(event.end).toISOString(),
+				start: new Date(event.start).toString(),
+				end: new Date(event.end).toString(),
 			})
 		);
 	};

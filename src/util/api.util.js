@@ -8,13 +8,11 @@ const api = axios.create({
 
 api.interceptors.response.use(
 	res => {
-		console.log(res);
 		return Promise.resolve(res.data);
 	},
 	async err => {
 		const accessToken = localStorage.getItem('access_token');
 		const refreshToken = localStorage.getItem('refresh_token');
-		console.log(err);
 		if (err.response.status === 403 && accessToken && refreshToken) {
 			const res = await api.get('/auth/refresh', {
 				headers: {

@@ -1,7 +1,17 @@
+import { useEffect } from 'react';
 import { Form, Input, Modal, Select } from 'antd';
 import propTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllUsers } from '../../../../action/user.action';
 
 function CreateEventModal({ visible, setVisible, event }) {
+	const dispatch = useDispatch();
+	const { allUsers } = useSelector(state => state.user);
+
+	useEffect(() => {
+		dispatch(getAllUsers());
+	}, [dispatch]);
+
 	return (
 		<Modal
 			open={visible}
@@ -20,11 +30,16 @@ function CreateEventModal({ visible, setVisible, event }) {
 					/>
 				</Form.Item>
 				<Form.Item label='Guests'>
-					<Select mode='multiple' placeholder='Select guests'>
-						<Select.Option value='user1'>user1</Select.Option>
-						<Select.Option value='user2'>user2</Select.Option>
-						<Select.Option value='user3'>user3</Select.Option>
-						<Select.Option value='user4'>user4</Select.Option>
+					<Select
+						mode='multiple'
+						placeholder='Select guests'
+						optionLabelProp='label'
+					>
+						{allUsers?.map(user => (
+							<Select.Option key={user._id} value={user._id} label={user.name}>
+								{user.name} {`<${user.email}>`}
+							</Select.Option>
+						))}
 					</Select>
 				</Form.Item>
 			</Form>

@@ -14,17 +14,15 @@ const Signup = () => {
 	const [loading, setLoading] = useState(false);
 	const [form] = Form.useForm();
 
-	const submitHandler = values => {
+	const submitHandler = async values => {
 		setLoading(true);
-		dispatch(postSignup(values))
-			.then(() => {
-				setUserEmail(values.email);
-				setIsVerificationModalVisible(true);
-				message.success('Signup successful');
-			})
-			.finally(() => {
-				setLoading(false);
-			});
+		try {
+			await dispatch(postSignup(values));
+			setUserEmail(values.email);
+			setIsVerificationModalVisible(true);
+		} finally {
+			setLoading(false);
+		}
 	};
 	const checkFieldValidation = () => {
 		const missingRequiredField = Object.values(form.getFieldsValue()).some(
@@ -66,7 +64,7 @@ const Signup = () => {
 						onChange={checkFieldValidation}
 					>
 						<Form.Item label='Name' name='name' rules={[{ required: true }]}>
-							<Input placeholder='select me' size='large' />
+							<Input placeholder='Arpit Chugh' size='large' />
 						</Form.Item>
 
 						<Form.Item
@@ -74,7 +72,7 @@ const Signup = () => {
 							name='email'
 							rules={[{ required: true, type: 'email' }]}
 						>
-							<Input placeholder='terraformers@select-me.com' size='large' />
+							<Input placeholder='arpiitchugh@gmail.com' size='large' />
 						</Form.Item>
 
 						<Form.Item
@@ -82,7 +80,7 @@ const Signup = () => {
 							name='password'
 							rules={[{ required: true }]}
 						>
-							<Input.Password placeholder='kr lo' size='large' />
+							<Input.Password placeholder='strongpassword' size='large' />
 						</Form.Item>
 
 						<Form.Item
@@ -103,10 +101,10 @@ const Signup = () => {
 							]}
 							dependencies={['password']}
 						>
-							<Input.Password placeholder='ab kr bhi lo !!' size='large' />
+							<Input.Password placeholder='strongpassword' size='large' />
 						</Form.Item>
 						<Typography.Paragraph className='text-center'>
-							already have an account?{' '}
+							already have an account?
 							<Link
 								to='/login'
 								className='text-blue-500 !underline underline-offset-2'

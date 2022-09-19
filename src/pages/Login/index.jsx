@@ -70,7 +70,7 @@ function Login() {
 							name='email'
 							rules={[{ required: true, type: 'email' }]}
 						>
-							<Input placeholder='info@shriproperty.com' size='large' />
+							<Input placeholder='arpiitchugh@gmail.com' size='large' />
 						</Form.Item>
 
 						<Form.Item
@@ -78,7 +78,7 @@ function Login() {
 							name='password'
 							rules={[{ required: true }]}
 						>
-							<Input.Password placeholder='mypasssword' size='large' />
+							<Input.Password placeholder='strongpassword' size='large' />
 						</Form.Item>
 						<Typography.Paragraph className='text-center'>
 							don't have an account?{' '}

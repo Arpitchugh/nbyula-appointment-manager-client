@@ -5,9 +5,9 @@ export function postSignup(body) {
 	return async () => {
 		try {
 			const res = await api.post('/auth/signup', body);
-			Promise.resolve(res);
+			return Promise.resolve(res);
 		} catch (err) {
-			Promise.reject(err);
+			return Promise.reject(err);
 		}
 	};
 }

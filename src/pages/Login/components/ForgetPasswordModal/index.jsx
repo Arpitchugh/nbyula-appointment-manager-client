@@ -47,9 +47,10 @@ const ForgetPasswordModal = ({ isVisible, setIsVisible }) => {
 					},
 					{ password: values.password, cpassword: values.cpassword }
 				)
-			).then(() => {
-				message.success('Password reset successfully');
-			});
+			);
+
+			setIsVisible(false);
+			message.success('Password reset successfully');
 		} finally {
 			setVerifyAccountLoading(false);
 		}
@@ -95,7 +96,7 @@ const ForgetPasswordModal = ({ isVisible, setIsVisible }) => {
 					rules={[{ required: true, type: 'email' }]}
 				>
 					<div className='!flex !flex-row items-center'>
-						<Input placeholder='terraformers@select-me.com' size='large' />
+						<Input placeholder='arpiitchugh@gmail.com' size='large' />
 						<Button
 							type='primary'
 							className='ml-2'
@@ -121,7 +122,7 @@ const ForgetPasswordModal = ({ isVisible, setIsVisible }) => {
 					name='password'
 					rules={[{ required: true }]}
 				>
-					<Input.Password placeholder='kr lo' size='large' />
+					<Input.Password placeholder='strongpassword' size='large' />
 				</Form.Item>
 
 				<Form.Item
@@ -142,7 +143,7 @@ const ForgetPasswordModal = ({ isVisible, setIsVisible }) => {
 					]}
 					dependencies={['password']}
 				>
-					<Input.Password placeholder='ab kr bhi lo !!' size='large' />
+					<Input.Password placeholder='strongpassword' size='large' />
 				</Form.Item>
 			</Form>
 		</Modal>

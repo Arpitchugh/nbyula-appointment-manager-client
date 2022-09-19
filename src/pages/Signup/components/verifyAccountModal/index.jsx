@@ -28,7 +28,7 @@ function VerifyAccountModal({ isVisible, setIsVisible, email }) {
 			await dispatch(
 				getVerifyAccount({ email, verificationCode: values.verificationCode })
 			);
-			message.success('Account verified successfully');
+			message.success('Account created successfully');
 			setIsVisible(false);
 			navigate('/login');
 		} finally {

@@ -105,11 +105,11 @@ function CreateEventModal({ visible, setVisible, event }) {
 		>
 			<Form layout='vertical' form={form} onFinish={submitHandler}>
 				<Form.Item label='Title' name='title' rules={[{ required: true }]}>
-					<Input placeholder='salary++' />
+					<Input placeholder='Proposal for new project' />
 				</Form.Item>
 				<Form.Item label='Agenda' name='agenda' rules={[{ required: true }]}>
 					<Input.TextArea
-						placeholder='lets talk about increasing my salary'
+						placeholder='Detailed description of the event'
 						rows={4}
 					/>
 				</Form.Item>

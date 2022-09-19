@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Form, Input, Modal, Select } from 'antd';
+import { Button, Form, Input, message, Modal, Select } from 'antd';
 import propTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../../../../action/user.action';
@@ -41,6 +41,11 @@ function CreateEventModal({ visible, setVisible, event }) {
 	};
 
 	const blockTimeHandler = async () => {
+		const values = form.getFieldsValue();
+		console.log(values);
+		if (values.title || values.agenda || selectedGuests.length > 0) {
+			message.info('you dont have to give any values for blocking time');
+		}
 		setLoading(true);
 		try {
 			await dispatch(
@@ -56,6 +61,8 @@ function CreateEventModal({ visible, setVisible, event }) {
 		} finally {
 			setLoading(false);
 			dispatch(getUserEvents());
+			setSelectedGuests([]);
+			form.resetFields();
 		}
 	};
 
@@ -112,6 +119,7 @@ function CreateEventModal({ visible, setVisible, event }) {
 						placeholder='Select guests'
 						optionLabelProp='label'
 						showSearch
+						showArrow
 						optionFilterProp='children'
 						onChange={value => setSelectedGuests(value)}
 					>

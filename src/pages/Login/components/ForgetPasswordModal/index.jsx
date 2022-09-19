@@ -62,7 +62,7 @@ const ForgetPasswordModal = ({ isVisible, setIsVisible }) => {
 
 	return (
 		<Modal
-			title='Verify Your Account!'
+			title='change password'
 			open={isVisible}
 			closable={false}
 			destroyOnClose

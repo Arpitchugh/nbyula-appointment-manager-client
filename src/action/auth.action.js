@@ -106,3 +106,27 @@ export function getLogoutUser() {
 		}
 	};
 }
+
+export function refreshAccessToken() {
+	return async dispatch => {
+		const accessToken = localStorage.getItem('access_token');
+		const refreshToken = localStorage.getItem('refresh_token');
+
+		try {
+			if (accessToken && refreshAccessToken()) {
+				const res = await api.get('/auth/refresh', {
+					headers: {
+						'x-refresh': refreshToken,
+					},
+				});
+
+				if (res.access_token)
+					localStorage.setItem('access_token', res.access_token);
+
+				dispatch(getCurrentUser());
+			}
+		} catch (err) {
+			return Promise.reject(err);
+		}
+	};
+}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, List, message, Modal, Typography } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
 	deleteEvent,
 	getUserEvents,
@@ -9,6 +9,7 @@ import {
 function ViewEvent({ visible, setVisible, event }) {
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(false);
+	const { currentUser } = useSelector(state => state.user);
 
 	const deleteEventHandler = async () => {
 		try {
@@ -75,14 +76,16 @@ function ViewEvent({ visible, setVisible, event }) {
 							)}
 						/>
 					</div>
-					<Button
-						danger
-						loading={loading}
-						type='ghost'
-						onClick={deleteEventHandler}
-					>
-						delete event
-					</Button>
+					{event?.organizer?.email === currentUser.email && (
+						<Button
+							danger
+							loading={loading}
+							type='ghost'
+							onClick={deleteEventHandler}
+						>
+							delete event
+						</Button>
+					)}
 				</>
 			) : (
 				<Button type='primary' onClick={deleteEventHandler} loading={loading}>

@@ -31,24 +31,31 @@ ASSIGNMENT NO : 1 Appointment manager that allows Terraformers to schedule appoi
 - Only organizer can delete the appointment for everyone
 
 ## Tech Stack
+
 - Server
-    - Node js
-    - Express
-    - MongoDB
-    - mongoose
-    - bcrypt (hashing passwords)
-    - zod (request validation)
-    - nodemailer (sending emails)
-    - moment (managing dates)
-    - jsonwebtoken (signing JWT tokens)
+  - Node js
+  - Express
+  - MongoDB
+  - mongoose
+  - bcrypt (hashing passwords)
+  - zod (request validation)
+  - nodemailer (sending emails)
+  - moment (managing dates)
+  - jsonwebtoken (signing JWT tokens)
 - Client
-    - React
-    - Redux/Redux toolkit
+  - React
+  - Redux/Redux toolkit
+  - Ant design
+  - Tailwind css
+  - Axios
+  - moment (managing dates)
+  - React big calender (calender)
 
 ## Links
 
 - Hosted URL:- https://www.nbyula-appointment-manager.arpitchugh.live/
 - Server Repo:- https://github.com/Arpitchugh/nbyula-appointment-manager-server
+- Client Repo:- https://github.com/Arpitchugh/nbyula-appointment-manager-client
 - Postman:- https://www.postman.com/arpiitchugh/workspace/nbyula-appointment-manager
 
 ## Demo
